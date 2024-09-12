@@ -16,9 +16,12 @@
 	<ItemGroup>
 		<PackageReference Include="BouncyCastle.Cryptography" Version="2.4.0" />
 		<PackageReference Include="CommunityToolkit.HighPerformance" Version="8.2.2" />
-		<Reference Include="SoulsFormats">
-			<HintPath>..\..\..\Smithbox\src\Andre\SoulsFormats\SoulsFormats\bin\Debug\net8.0-windows\SoulsFormats.dll</HintPath>
-		</Reference>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Reference Include="SoulsFormats">
+	    <HintPath>..\..\SmithboxSoulsFormats\src\Andre\SoulsFormats\SoulsFormats\bin\Debug\net8.0-windows\SoulsFormats.dll</HintPath>
+	  </Reference>
 	</ItemGroup>
 
 </Project>
