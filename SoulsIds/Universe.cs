@@ -67,7 +67,7 @@ namespace SoulsIds
             SpEffect,
             SFX,
         }
-        private static HashSet<Namespace> Quotes = new HashSet<Namespace> { Namespace.Action, Namespace.Dialogue, Namespace.Talk, Namespace.ActionButton };
+        private static HashSet<Namespace> Quotes = new HashSet<Namespace> { Namespace.Action, Namespace.Dialogue, Namespace.Talk, Namespace.ActionButton, Namespace.Mission };
         public class Obj : IComparable<Obj>
         {
             public string ID { get; set; }
@@ -98,7 +98,7 @@ namespace SoulsIds
                 return n == Type;
             }
 
-            private Obj(object ID, Namespace Type, int RangeEnd=-1)
+            private Obj(object ID, Namespace Type, int RangeEnd = -1)
             {
                 this.ID = ID.ToString();
                 this.Type = Type;
@@ -107,7 +107,7 @@ namespace SoulsIds
 
             // Helpers
             public static Obj Lot(int id) => new Obj(id, Namespace.Lot);
-            public static Obj Shop(int id, int end=-1) => new Obj(id, Namespace.Shop, end);
+            public static Obj Shop(int id, int end = -1) => new Obj(id, Namespace.Shop, end);
             public static Obj EventFlag(int id, int end = -1) => new Obj(id, Namespace.EventFlag, end);
             public static Obj EventFlag(uint id, int end = -1) => new Obj(id, Namespace.EventFlag, end);
             public static Obj Talk(int id) => new Obj(id, Namespace.Talk);
@@ -129,6 +129,7 @@ namespace SoulsIds
             // For names
             public static Obj Of(Namespace type, object id) => new Obj(id, type);
 
+
             public static Obj Item(uint type, int id)
             {
                 if (!LotTypes.TryGetValue(type, out int itemType))
@@ -142,13 +143,20 @@ namespace SoulsIds
                 return Of(Namespace.Weapon + itemType, id);
             }
 
-            public static Obj AC6Item(int type, int id)
+            public static Obj AC6Mission(int id) => new Obj(id, Namespace.Mission);
+
+            public static Obj AC6Item(uint type, int id)
             {
                 Namespace n;
-                if (type >= 0 && type < 4)
-                {
-                    n = Namespace.Weapon + type;
-                }
+                //if (type >= 0 && type < 4)
+                //{
+                //    n = Namespace.Weapon + type;
+                //}
+                if (type == 0) n = Namespace.Weapon;
+                else if (type == 1) n = Namespace.Protector;
+                else if (type == 2) n = Namespace.Accessory;
+                else if (type == 3) n = Namespace.Goods;
+                else if (type == 4) n = Namespace.Gem;
                 // idk. It's 4 5 6 in EquipmentLineupParam?
                 else if (type == 6) n = Namespace.Booster;
                 else if (type == 7) n = Namespace.Fcs;
@@ -203,12 +211,12 @@ namespace SoulsIds
             }
             return $"{obj}";
         }
-        public List<Obj> Next(Obj obj, Verb v, Namespace type=Namespace.Global)
+        public List<Obj> Next(Obj obj, Verb v, Namespace type = Namespace.Global)
         {
             if (!Nodes.ContainsKey(obj)) return new List<Obj>();
             return Nodes[obj].To.Where(r => r.Verb == v && r.To.HasType(type)).Select(r => r.To).ToList();
         }
-        public List<Obj> Prev(Obj obj, Verb v, Namespace type=Namespace.Global)
+        public List<Obj> Prev(Obj obj, Verb v, Namespace type = Namespace.Global)
         {
             if (!Nodes.ContainsKey(obj)) return new List<Obj>();
             return Nodes[obj].From.Where(r => r.Verb == v && r.From.HasType(type)).Select(r => r.From).ToList();
@@ -268,7 +276,7 @@ namespace SoulsIds
             // Optional
             public Namespace Type { get; set; }
             // Opposite subject treatment from PartialRelation, hm. Should give PartialRelation a better name
-            public static RelationSpec Verbs(Verb verb, Namespace type=Namespace.Global)
+            public static RelationSpec Verbs(Verb verb, Namespace type = Namespace.Global)
             {
                 return new RelationSpec { Verb = verb, Subject = true, Type = type };
             }
