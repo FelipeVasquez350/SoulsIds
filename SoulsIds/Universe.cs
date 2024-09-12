@@ -126,6 +126,8 @@ namespace SoulsIds
             public static Obj Bonfire(int id) => new Obj(id, Namespace.Bonfire);
             public static Obj Human(int id) => new Obj(id, Namespace.Human);
 
+            public static Obj Tutorial(int id) => new Obj(id, Namespace.Tutorial);
+
             // For names
             public static Obj Of(Namespace type, object id) => new Obj(id, type);
 
