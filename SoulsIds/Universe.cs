@@ -159,9 +159,9 @@ namespace SoulsIds
                 else if (type == 2) n = Namespace.Accessory;
                 else if (type == 3) n = Namespace.Goods;
                 // idk. It's 4 5 6 in EquipmentLineupParam?
-                else if (type == 4) n = Namespace.Booster; // actually 6
-                else if (type == 5) n = Namespace.Fcs; // actually 7
-                else if (type == 6) n = Namespace.Generator; // actually 5
+                else if (type == 6) n = Namespace.Booster; // actually 6
+                else if (type == 7) n = Namespace.Fcs; // actually 7
+                else if (type == 5) n = Namespace.Generator; // actually 5
                 else return UnknownItem(type, id);
                 return Of(n, id);
             }
